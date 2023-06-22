@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace GarageGroup.Infra;
 
-public interface IBusMessageSendSupplier
+public interface IBusMessageSendSupplier<TMessageJson>
 {
-    Task<Unit> SendMessageAsync<TMessageJson>(BusMessageSendIn<TMessageJson> input, CancellationToken cancellationToken);
+    Task<Unit> SendMessageAsync(BusMessageSendIn<TMessageJson> input, CancellationToken cancellationToken);
 }

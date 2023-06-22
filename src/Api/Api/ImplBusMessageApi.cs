@@ -4,21 +4,21 @@ using Azure.Messaging.ServiceBus;
 
 namespace GarageGroup.Infra;
 
-internal sealed partial class ImplServiceBusApi : IServiceBusApi
+internal sealed partial class ImplBusMessageApi<TMessageJson> : IBusMessageApi<TMessageJson>
 {
     private static readonly JsonSerializerOptions SerializerOptions;
 
-    static ImplServiceBusApi()
+    static ImplBusMessageApi()
         =>
         SerializerOptions = new(JsonSerializerDefaults.Web);
 
     private readonly ServiceBusApiOption option;
 
-    internal ImplServiceBusApi(ServiceBusApiOption option)
+    internal ImplBusMessageApi(ServiceBusApiOption option)
         =>
         this.option = option;
 
-    private static ServiceBusMessage CreateServiceBusMessage<TMessageJson>(TMessageJson message)
+    private static ServiceBusMessage CreateServiceBusMessage(TMessageJson message)
     {
         var json = JsonSerializer.Serialize(message, SerializerOptions);
 
@@ -28,7 +28,7 @@ internal sealed partial class ImplServiceBusApi : IServiceBusApi
         };
     }
 
-    private static ServiceBusMessage CreateServiceBusMessage<TMessageJson>(TMessageJson message, DateTimeOffset? scheduledTime)
+    private static ServiceBusMessage CreateServiceBusMessage(TMessageJson message, DateTimeOffset? scheduledTime)
     {
         var busMessage = CreateServiceBusMessage(message);
 

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace GarageGroup.Infra;
 
-public interface IBusMessageScheduleSupplier
+public interface IBusMessageScheduleSupplier<TMessageJson>
 {
-    Task<BusMessageScheduleOut> ScheduleMessageAsync<TMessageJson>(BusMessageScheduleIn<TMessageJson> input, CancellationToken cancellationToken);
+    Task<BusMessageScheduleOut> ScheduleMessageAsync(BusMessageScheduleIn<TMessageJson> input, CancellationToken cancellationToken);
 }

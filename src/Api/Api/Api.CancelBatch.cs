@@ -5,7 +5,7 @@ using Azure.Messaging.ServiceBus;
 
 namespace GarageGroup.Infra;
 
-partial class ImplServiceBusApi
+partial class ImplBusMessageApi<TMessageJson>
 {
     public ValueTask<Unit> CancelScheduledBatchAsync(BusBatchCancelIn input, CancellationToken cancellationToken)
     {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace GarageGroup.Infra;
 
-public interface IBusBatchSendSupplier
+public interface IBusBatchSendSupplier<TMessageJson>
 {
-    ValueTask<Unit> SendBatchAsync<TMessageJson>(BusBatchSendIn<TMessageJson> input, CancellationToken cancellationToken);
+    ValueTask<Unit> SendBatchAsync(BusBatchSendIn<TMessageJson> input, CancellationToken cancellationToken);
 }

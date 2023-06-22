@@ -6,10 +6,9 @@ using Azure.Messaging.ServiceBus;
 
 namespace GarageGroup.Infra;
 
-partial class ImplServiceBusApi
+partial class ImplBusMessageApi<TMessageJson>
 {
-    public ValueTask<Unit> SendBatchAsync<TMessageJson>(
-        BusBatchSendIn<TMessageJson> input, CancellationToken cancellationToken)
+    public ValueTask<Unit> SendBatchAsync(BusBatchSendIn<TMessageJson> input, CancellationToken cancellationToken)
     {
         if (cancellationToken.IsCancellationRequested)
         {
@@ -24,8 +23,7 @@ partial class ImplServiceBusApi
         return InnerSendBatchAsync(input, cancellationToken);
     }
 
-    private async ValueTask<Unit> InnerSendBatchAsync<TMessageJson>(
-        BusBatchSendIn<TMessageJson> input, CancellationToken cancellationToken)
+    private async ValueTask<Unit> InnerSendBatchAsync(BusBatchSendIn<TMessageJson> input, CancellationToken cancellationToken)
     {
         await using var client = new ServiceBusClient(option.ServiceBusConnectionString);
         var sender = client.CreateSender(option.QueueName);

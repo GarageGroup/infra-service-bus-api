@@ -6,11 +6,11 @@ namespace GarageGroup.Infra;
 
 public static class ServiceBusMessageApi
 {
-    public static Dependency<IBusMessageApi> Configure(string sectionName)
+    public static Dependency<IBusMessageApi<TMessageJson>> Configure<TMessageJson>(string sectionName)
     {
-        return Dependency.From<IBusMessageApi>(ResolveApi);
+        return Dependency.From<IBusMessageApi<TMessageJson>>(ResolveApi);
 
-        ImplServiceBusApi ResolveApi(IServiceProvider serviceProvider)
+        ImplBusMessageApi<TMessageJson> ResolveApi(IServiceProvider serviceProvider)
         {
             ArgumentNullException.ThrowIfNull(serviceProvider);
 
@@ -19,13 +19,13 @@ public static class ServiceBusMessageApi
         }
     }
 
-    public static Dependency<IBusMessageApi> Configure(
+    public static Dependency<IBusMessageApi<TMessageJson>> Configure<TMessageJson>(
         string serviceBusConnectionStringConfigurationKey,
         string queueNameConfigurationKey)
     {
-        return Dependency.From<IBusMessageApi>(ResolveApi);
+        return Dependency.From<IBusMessageApi<TMessageJson>>(ResolveApi);
 
-        ImplServiceBusApi ResolveApi(IServiceProvider serviceProvider)
+        ImplBusMessageApi<TMessageJson> ResolveApi(IServiceProvider serviceProvider)
         {
             ArgumentNullException.ThrowIfNull(serviceProvider);
 

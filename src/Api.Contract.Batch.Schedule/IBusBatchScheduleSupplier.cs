@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace GarageGroup.Infra;
 
-public interface IBusBatchScheduleSupplier
+public interface IBusBatchScheduleSupplier<TMessageJson>
 {
-    ValueTask<BusBatchScheduleOut> ScheduleBatchAsync<TMessageJson>(BusBatchScheduleIn<TMessageJson> input, CancellationToken cancellationToken);
+    ValueTask<BusBatchScheduleOut> ScheduleBatchAsync(BusBatchScheduleIn<TMessageJson> input, CancellationToken cancellationToken);
 }

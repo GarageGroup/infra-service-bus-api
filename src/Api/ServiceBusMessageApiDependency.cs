@@ -5,12 +5,12 @@ namespace GarageGroup.Infra;
 
 public static class ServiceBusMessageApiDependency
 {
-    public static Dependency<IBusMessageApi> UseBusMessageApi(this Dependency<ServiceBusApiOption> dependency)
+    public static Dependency<IBusMessageApi<TMessageJson>> UseBusMessageApi<TMessageJson>(this Dependency<ServiceBusApiOption> dependency)
     {
         ArgumentNullException.ThrowIfNull(dependency);
-        return dependency.Map<IBusMessageApi>(CreateApi);
+        return dependency.Map<IBusMessageApi<TMessageJson>>(CreateApi);
 
-        static ImplServiceBusApi CreateApi(ServiceBusApiOption option)
+        static ImplBusMessageApi<TMessageJson> CreateApi(ServiceBusApiOption option)
         {
             ArgumentNullException.ThrowIfNull(option);
             return new(option);

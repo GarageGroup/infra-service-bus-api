@@ -5,9 +5,9 @@ using Azure.Messaging.ServiceBus;
 
 namespace GarageGroup.Infra;
 
-partial class ImplServiceBusApi
+partial class ImplBusMessageApi<TMessageJson>
 {
-    public Task<BusMessageScheduleOut> ScheduleMessageAsync<TMessageJson>(
+    public Task<BusMessageScheduleOut> ScheduleMessageAsync(
         BusMessageScheduleIn<TMessageJson> input, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(input);
@@ -20,7 +20,7 @@ partial class ImplServiceBusApi
         return InnerScheduleMessageAsync(input, cancellationToken);
     }
 
-    private async Task<BusMessageScheduleOut> InnerScheduleMessageAsync<TMessageJson>(
+    private async Task<BusMessageScheduleOut> InnerScheduleMessageAsync(
         BusMessageScheduleIn<TMessageJson> input, CancellationToken cancellationToken)
     {
         await using var client = new ServiceBusClient(option.ServiceBusConnectionString);
