@@ -1,0 +1,129 @@
+name: Build and push .NET packages
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.0.x'
+        
+     # Add NuGet Sources
+
+    - name: Create Local NuGet Directory
+      run: mkdir ~/nuget
+
+    - name: Add Local Nuget Source
+      run: dotnet nuget add source ~/nuget
+
+    - name: Add GGroupp NuGet Source
+      run: >
+        dotnet nuget add source ${{ secrets.GG_NUGET_SOURCE_URL }}
+        -n ggroupp -u ${{ secrets.GG_NUGET_SOURCE_USER_NAME }}
+        -p ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
+        --store-password-in-clear-text
+
+    # Api.Contract.Batch.Cancel.csproj
+
+    - name: Restore Api.Contract.Batch.Cancel.csproj
+      run: dotnet restore ./src/*/Api.Contract.Batch.Cancel.csproj
+
+    - name: Build Api.Contract.Batch.Cancel.csproj
+      run: dotnet build ./src/*/Api.Contract.Batch.Cancel.csproj --no-restore  -c Release
+
+    - name: Pack Api.Contract.Batch.Cancel.csproj
+      run: dotnet pack ./src/*/Api.Contract.Batch.Cancel.csproj --no-build -o ~/nuget  -c Release
+
+    # Api.Contract.Batch.Schedule.csproj
+
+    - name: Restore Api.Contract.Batch.Schedule.csproj
+      run: dotnet restore ./src/*/Api.Contract.Batch.Schedule.csproj
+
+    - name: Build Api.Contract.Batch.Schedule.csproj
+      run: dotnet build ./src/*/Api.Contract.Batch.Schedule.csproj --no-restore  -c Release
+
+    - name: Pack Api.Contract.Batch.Schedule.csproj
+      run: dotnet pack ./src/*/Api.Contract.Batch.Schedule.csproj --no-build -o ~/nuget  -c Release
+
+    # Api.Contract.Batch.Send.csproj
+
+    - name: Restore Api.Contract.Batch.Send.csproj
+      run: dotnet restore ./src/*/Api.Contract.Batch.Send.csproj
+
+    - name: Build Api.Contract.Batch.Send.csproj
+      run: dotnet build ./src/*/Api.Contract.Batch.Send.csproj --no-restore  -c Release
+
+    - name: Pack Api.Contract.Batch.Send.csproj
+      run: dotnet pack ./src/*/Api.Contract.Batch.Send.csproj --no-build -o ~/nuget  -c Release
+
+    # Api.Contract.Message.Cancel.csproj
+
+    - name: Restore Api.Contract.Message.Cancel.csproj
+      run: dotnet restore ./src/*/Api.Contract.Message.Cancel.csproj
+
+    - name: Build Api.Contract.Message.Cancel.csproj
+      run: dotnet build ./src/*/Api.Contract.Message.Cancel.csproj --no-restore  -c Release
+
+    - name: Pack Api.Contract.Message.Cancel.csproj
+      run: dotnet pack ./src/*/Api.Contract.Message.Cancel.csproj --no-build -o ~/nuget  -c Release
+
+    # Api.Contract.Message.Schedule.csproj
+
+    - name: Restore Api.Contract.Message.Schedule.csproj
+      run: dotnet restore ./src/*/Api.Contract.Message.Schedule.csproj
+
+    - name: Build Api.Contract.Message.Schedule.csproj
+      run: dotnet build ./src/*/Api.Contract.Message.Schedule.csproj --no-restore  -c Release
+
+    - name: Pack Api.Contract.Message.Schedule.csproj
+      run: dotnet pack ./src/*/Api.Contract.Message.Schedule.csproj --no-build -o ~/nuget  -c Release
+
+    # Api.Contract.Message.Send.csproj
+
+    - name: Restore Api.Contract.Message.Send.csproj
+      run: dotnet restore ./src/*/Api.Contract.Message.Send.csproj
+
+    - name: Build Api.Contract.Message.Send.csproj
+      run: dotnet build ./src/*/Api.Contract.Message.Send.csproj --no-restore  -c Release
+
+    - name: Pack Api.Contract.Message.Send.csproj
+      run: dotnet pack ./src/*/Api.Contract.Message.Send.csproj --no-build -o ~/nuget  -c Release
+
+    # Api.Contract.csproj
+
+    - name: Restore Api.Contract.csproj
+      run: dotnet restore ./src/*/Api.Contract.csproj
+
+    - name: Build Api.Contract.csproj
+      run: dotnet build ./src/*/Api.Contract.csproj --no-restore  -c Release
+
+    - name: Pack Api.Contract.csproj
+      run: dotnet pack ./src/*/Api.Contract.csproj --no-build -o ~/nuget  -c Release
+
+    # Api.csproj
+
+    - name: Restore Api.csproj
+      run: dotnet restore ./src/*/Api.csproj
+
+    - name: Build Api.csproj
+      run: dotnet build ./src/*/Api.csproj --no-restore  -c Release
+
+    - name: Pack Api.csproj
+      run: dotnet pack ./src/*/Api.csproj --no-build -o ~/nuget  -c Release
+
+    # Push
+      
+    - name: Push Packages
+      if: ${{ github.ref == 'refs/heads/main' }}
+      run: >
+        dotnet nuget push "../../../nuget/*.nupkg"
+        -s ${{ secrets.GG_NUGET_SOURCE_URL }}
+        -k ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
+        --skip-duplicate
