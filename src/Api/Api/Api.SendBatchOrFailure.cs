@@ -29,7 +29,7 @@ partial class ImplBusMessageApi<TMessageJson>
         {
             return await InnerSendBatchAsync(input, cancellationToken).ConfigureAwait(false);
         }
-        catch (Exception exception)
+        catch (Exception exception) when (exception is not OperationCanceledException)
         {
             return exception.ToFailure("An unexpected exception was thrown when sending a batch to the service bus");
         }
