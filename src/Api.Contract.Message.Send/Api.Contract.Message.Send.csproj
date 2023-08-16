@@ -8,11 +8,13 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <RootNamespace>GarageGroup.Infra</RootNamespace>
     <AssemblyName>GarageGroup.Infra.ServiceBus.Api.Contract.Message.Send</AssemblyName>
-    <Version>0.0.1</Version>
+    <Version>0.1.0-preview.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PrimeFuncPack.Core.FlatArray" Version="1.1.0" />
+    <PackageReference Include="PrimeFuncPack.Core.Failure" Version="2.1.0" />
+    <PackageReference Include="PrimeFuncPack.Core.FlatArray" Version="1.2.0-preview.3" />
+    <PackageReference Include="PrimeFuncPack.Core.Result" Version="2.0.2" />
     <PackageReference Include="PrimeFuncPack.Core.Unit" Version="2.2.0" />
   </ItemGroup>
 
