@@ -26,7 +26,7 @@ partial class ImplBusMessageApi<TMessageJson>
         {
             return await InnerScheduleMessageAsync(input, cancellationToken).ConfigureAwait(false);
         }
-        catch (Exception exception)
+        catch (Exception exception) when (exception is not OperationCanceledException)
         {
             return exception.ToFailure("An unexpected exception was thrown when scheduling a message to the service bus");
         }
