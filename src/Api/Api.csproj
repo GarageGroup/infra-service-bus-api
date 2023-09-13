@@ -8,12 +8,12 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <RootNamespace>GarageGroup.Infra</RootNamespace>
     <AssemblyName>GarageGroup.Infra.ServiceBus.Api</AssemblyName>
-    <Version>0.1.0-preview.2</Version>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.16.1" />
-    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract" Version="0.1.0-preview.1" />
+    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract" Version="0.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
     <PackageReference Include="PrimeFuncPack.Dependency" Version="2.0.2" />
   </ItemGroup>
