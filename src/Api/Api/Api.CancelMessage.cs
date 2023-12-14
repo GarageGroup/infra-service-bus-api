@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
 
 namespace GarageGroup.Infra;
 
@@ -19,10 +18,7 @@ partial class ImplBusMessageApi<TMessageJson>
 
     private async Task<Unit> InnerCancelScheduledMessageAsync(BusMessageCancelIn input, CancellationToken cancellationToken)
     {
-        await using var client = new ServiceBusClient(option.ServiceBusConnectionString);
-        var sender = client.CreateSender(option.QueueName);
-
-        await sender.CancelScheduledMessageAsync(input.SequenceNumber, cancellationToken).ConfigureAwait(false);
+        await serviceBusSender.CancelScheduledMessageAsync(input.SequenceNumber, cancellationToken).ConfigureAwait(false);
         return default;
     }
 }

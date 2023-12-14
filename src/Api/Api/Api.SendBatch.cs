@@ -25,10 +25,7 @@ partial class ImplBusMessageApi<TMessageJson>
 
     private async ValueTask<Unit> InnerSendBatchAsync(BusBatchSendIn<TMessageJson> input, CancellationToken cancellationToken)
     {
-        await using var client = new ServiceBusClient(option.ServiceBusConnectionString);
-        var sender = client.CreateSender(option.QueueName);
-
-        var messageBatch = await sender.CreateMessageBatchAsync(cancellationToken).ConfigureAwait(false);
+        var messageBatch = await serviceBusSender.CreateMessageBatchAsync(cancellationToken).ConfigureAwait(false);
         foreach (var busMessage in input.Messages.AsEnumerable().Select(InnerCreateServiceBusMessage))
         {
             if (messageBatch.TryAddMessage(busMessage))
@@ -36,8 +33,8 @@ partial class ImplBusMessageApi<TMessageJson>
                 continue;
             }
 
-            await sender.SendMessagesAsync(messageBatch, cancellationToken).ConfigureAwait(false);
-            messageBatch = await sender.CreateMessageBatchAsync(cancellationToken).ConfigureAwait(false);
+            await serviceBusSender.SendMessagesAsync(messageBatch, cancellationToken).ConfigureAwait(false);
+            messageBatch = await serviceBusSender.CreateMessageBatchAsync(cancellationToken).ConfigureAwait(false);
 
             if (messageBatch.TryAddMessage(busMessage) is false)
             {
@@ -47,7 +44,7 @@ partial class ImplBusMessageApi<TMessageJson>
 
         if (messageBatch.Count > 0)
         {
-            await sender.SendMessagesAsync(messageBatch, cancellationToken).ConfigureAwait(false);
+            await serviceBusSender.SendMessagesAsync(messageBatch, cancellationToken).ConfigureAwait(false);
         }
 
         return default;

@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <InvariantGlobalization>true</InvariantGlobalization>
     <RootNamespace>GarageGroup.Infra</RootNamespace>
     <AssemblyName>GarageGroup.Infra.ServiceBus.Api</AssemblyName>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.16.1" />
-    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract" Version="0.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
-    <PackageReference Include="PrimeFuncPack.Dependency" Version="2.0.2" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.17.1" />
+    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract" Version="0.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="PrimeFuncPack.Dependency" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

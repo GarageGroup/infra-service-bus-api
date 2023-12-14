@@ -1,23 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <InvariantGlobalization>true</InvariantGlobalization>
     <RootNamespace>GarageGroup.Infra</RootNamespace>
     <AssemblyName>GarageGroup.Infra.ServiceBus.Api.Contract</AssemblyName>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Batch.Cancel" Version="0.1.0" />
-    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Batch.Schedule" Version="0.1.0" />
-    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Batch.Send" Version="0.1.0" />
-    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Message.Cancel" Version="0.1.0" />
-    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Message.Schedule" Version="0.1.0" />
-    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Message.Send" Version="0.1.0" />
+    <PackageReference Include="GarageGroup.Infra.HealthCheck.Api.Contract.Ping" Version="0.0.1" />
+    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Batch.Cancel" Version="0.2.0" />
+    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Batch.Schedule" Version="0.2.0" />
+    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Batch.Send" Version="0.2.0" />
+    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Message.Cancel" Version="0.2.0" />
+    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Message.Schedule" Version="0.2.0" />
+    <PackageReference Include="GarageGroup.Infra.ServiceBus.Api.Contract.Message.Send" Version="0.2.0" />
   </ItemGroup>
 
 </Project>

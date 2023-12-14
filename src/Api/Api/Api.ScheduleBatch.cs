@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
 
 namespace GarageGroup.Infra;
 
@@ -27,11 +26,8 @@ partial class ImplBusMessageApi<TMessageJson>
     private async ValueTask<BusBatchScheduleOut> InnerScheduleBatchAsync(
         BusBatchScheduleIn<TMessageJson> input, CancellationToken cancellationToken)
     {
-        await using var client = new ServiceBusClient(option.ServiceBusConnectionString);
-        var sender = client.CreateSender(option.QueueName);
-
         var messages = input.Messages.AsEnumerable().Select(CreateServiceBusMessage);
-        var sequenceNumbers = await sender.ScheduleMessagesAsync(messages, input.ScheduledTime, cancellationToken).ConfigureAwait(false);
+        var sequenceNumbers = await serviceBusSender.ScheduleMessagesAsync(messages, input.ScheduledTime, cancellationToken).ConfigureAwait(false);
 
         return new(sequenceNumbers.ToFlatArray());
     }
