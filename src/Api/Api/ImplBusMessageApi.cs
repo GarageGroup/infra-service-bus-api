@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json;
+using System.Threading;
 using Azure.Messaging.ServiceBus;
 
 namespace GarageGroup.Infra;
@@ -12,11 +13,22 @@ internal sealed partial class ImplBusMessageApi<TMessageJson> : IBusMessageApi<T
         =>
         SerializerOptions = new(JsonSerializerDefaults.Web);
 
-    private readonly ServiceBusApiOption option;
+    private readonly ServiceBusClient serviceBusClient;
+
+    private readonly ServiceBusSender serviceBusSender;
+
+    private readonly Lazy<ServiceBusReceiver> lazyServiceBusReceiver;
 
     internal ImplBusMessageApi(ServiceBusApiOption option)
-        =>
-        this.option = option;
+    {
+        serviceBusClient = new(option.ServiceBusConnectionString);
+        serviceBusSender = serviceBusClient.CreateSender(option.QueueName);
+        lazyServiceBusReceiver = new(CreateReceiver, LazyThreadSafetyMode.ExecutionAndPublication);
+
+        ServiceBusReceiver CreateReceiver()
+            =>
+            serviceBusClient.CreateReceiver(option.QueueName);
+    }
 
     private static ServiceBusMessage CreateServiceBusMessage(TMessageJson message)
     {
